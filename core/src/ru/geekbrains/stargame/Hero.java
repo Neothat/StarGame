@@ -49,6 +49,10 @@ public class Hero {
             position.x += MathUtils.cosDeg(angle) * 500f * dt;
             position.y += MathUtils.sinDeg(angle) * 500f * dt;
             lastDisplacement.set(MathUtils.cosDeg(angle) * 500f * dt, MathUtils.sinDeg(angle) * 500f * dt);
+        } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+            position.x += MathUtils.cosDeg(angle) * -250f * dt;
+            position.y += MathUtils.sinDeg(angle) * -250f * dt;
+            lastDisplacement.set(MathUtils.cosDeg(angle) * -250f * dt, MathUtils.sinDeg(angle) * -250f * dt);
         } else {
             lastDisplacement.set(0, 0);
         }
