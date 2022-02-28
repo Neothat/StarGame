@@ -1,8 +1,9 @@
-package ru.geekbrains.stargame;
+package ru.geekbrains.stargame.game;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import ru.geekbrains.stargame.screen.ScreenManager;
 
 public class Asteroid {
 

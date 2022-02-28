@@ -1,4 +1,4 @@
-package ru.geekbrains.stargame;
+package ru.geekbrains.stargame.screen;
 
 public class ScreenManager {
     public static final int SCREEN_WIDTH = 1280;
