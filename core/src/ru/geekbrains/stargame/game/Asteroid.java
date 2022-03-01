@@ -1,31 +1,44 @@
 package ru.geekbrains.stargame.game;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import ru.geekbrains.stargame.screen.ScreenManager;
+import ru.geekbrains.stargame.game.helpers.Poolable;
 
-public class Asteroid {
+public class Asteroid implements Poolable {
 
-    private Texture textureAsteroid;
     private Vector2 position;
     private Vector2 velocity;
-    private float angle;
+    private boolean active;
 
-    public Asteroid() {
-        this.textureAsteroid = new Texture("asteroid.png");
-        this.position = new Vector2(ScreenManager.SCREEN_WIDTH + 256, 360);
-        this.velocity = new Vector2(0, 0);
-        this.angle = 0.0f;
+    @Override
+    public boolean isActive() {
+        return active;
     }
 
-    public void render(SpriteBatch batch) {
-        batch.draw(textureAsteroid, position.x - 128, position.y - 128, 128, 128,
-                256, 256, 0.5f, 0.5f, angle, 0, 0, 256, 256,
-                false, false);
+    public Asteroid() {
+        this.position = new Vector2();
+        this.velocity = new Vector2();
+        this.active = false;
     }
 
     public void update(float dt) {
+        position.mulAdd(velocity, dt);
 
+        if (position.x < -256) {
+            deactivate();
+        }
+    }
+
+    public void activate(float x, float y, float vx, float vy) {
+        position.set(x, y);
+        velocity.set(vx, vy);
+        active = true;
+    }
+
+    public void deactivate() {
+        active = false;
+    }
+
+    public Vector2 getPosition() {
+        return position;
     }
 }

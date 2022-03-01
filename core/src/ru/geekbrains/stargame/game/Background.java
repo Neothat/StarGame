@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import ru.geekbrains.stargame.StarGame;
 
 import static ru.geekbrains.stargame.screen.ScreenManager.SCREEN_HEIGHT;
 import static ru.geekbrains.stargame.screen.ScreenManager.SCREEN_WIDTH;
@@ -68,6 +67,10 @@ public class Background {
     public void update(float dt) {
         for (int i = 0; i < stars.length; i++) {
             stars[i].update(dt);
+        }
+        if (MathUtils.random(150) < 1) {
+            gc.getAsteroidController().setup(SCREEN_WIDTH + 256, MathUtils.random(SCREEN_HEIGHT),
+                    MathUtils.random(-150, -100), 0);
         }
     }
 

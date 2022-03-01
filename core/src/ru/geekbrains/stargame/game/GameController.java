@@ -3,6 +3,7 @@ package ru.geekbrains.stargame.game;
 public class GameController {
     private Background background;
     private BulletController bulletController;
+    private AsteroidController asteroidController;
     private Hero hero;
 
     public BulletController getBulletController() {
@@ -17,10 +18,15 @@ public class GameController {
         return hero;
     }
 
+    public AsteroidController getAsteroidController() {
+        return asteroidController;
+    }
+
     public GameController() {
         this.background = new Background(this);
         this.bulletController = new BulletController();
         this.hero = new Hero(this);
+        this.asteroidController = new AsteroidController();
 
     }
 
@@ -28,6 +34,7 @@ public class GameController {
         background.update(dt);
         bulletController.update(dt);
         hero.update(dt);
+        asteroidController.update(dt);
         checkCollisions();
     }
 
