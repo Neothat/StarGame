@@ -42,9 +42,11 @@ public class GameController {
     public void checkCollisions() {
         for (int i = 0; i < bulletController.getActiveList().size(); i++) {
             Bullet b = bulletController.getActiveList().get(i);
-
-            if (hero.getPosition().dst(b.getPosition()) < 32.0f) {
-                //b.deactivate();
+            for (int j = 0; j < asteroidController.getActiveList().size(); j++) {
+                Asteroid a = asteroidController.getActiveList().get(j);
+                if (a.getPosition().dst(b.getPosition()) < 64.0f){
+                    a.deactivate();
+                }
             }
         }
     }
