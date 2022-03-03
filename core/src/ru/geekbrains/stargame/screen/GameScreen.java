@@ -3,6 +3,7 @@ package ru.geekbrains.stargame.screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import ru.geekbrains.stargame.game.GameController;
 import ru.geekbrains.stargame.game.WorldRenderer;
+import ru.geekbrains.stargame.screen.utils.Assets;
 
 public class GameScreen extends AbstractScreen {
     private SpriteBatch batch;
@@ -15,6 +16,7 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void show() {
+        Assets.getInstance().loadAssets(ScreenManager.ScreenType.GAME);
         this.gc = new GameController();
         this.worldRenderer = new WorldRenderer(gc, batch);
     }

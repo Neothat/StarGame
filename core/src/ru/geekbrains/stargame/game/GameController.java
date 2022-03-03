@@ -1,5 +1,8 @@
 package ru.geekbrains.stargame.game;
 
+import com.badlogic.gdx.math.MathUtils;
+import ru.geekbrains.stargame.screen.ScreenManager;
+
 public class GameController {
     private Background background;
     private BulletController bulletController;
@@ -26,7 +29,13 @@ public class GameController {
         this.background = new Background(this);
         this.bulletController = new BulletController();
         this.hero = new Hero(this);
-        this.asteroidController = new AsteroidController();
+        this.asteroidController = new AsteroidController(this);
+
+        for (int i = 0; i < 3; i++) {
+            asteroidController.setup(MathUtils.random(0, ScreenManager.SCREEN_WIDTH),
+                    MathUtils.random(0, ScreenManager.SCREEN_HEIGHT),
+                    MathUtils.random(-150, 150), MathUtils.random(-150, 150), 1.0f);
+        }
 
     }
 
@@ -44,8 +53,12 @@ public class GameController {
             Bullet b = bulletController.getActiveList().get(i);
             for (int j = 0; j < asteroidController.getActiveList().size(); j++) {
                 Asteroid a = asteroidController.getActiveList().get(j);
-                if (a.getPosition().dst(b.getPosition()) < 64.0f){
-                    a.deactivate();
+                if (a.getHitArea().contains(b.getPosition())) {
+                    b.deactivate();
+                    if (a.takeDamage(1)) {
+                        hero.addScore(a.getHpMax() * 100 );
+                    }
+                    break;
                 }
             }
         }
