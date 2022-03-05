@@ -42,6 +42,8 @@ public class Asteroid implements Poolable {
         return position;
     }
 
+
+
     @Override
     public boolean isActive() {
         return active;

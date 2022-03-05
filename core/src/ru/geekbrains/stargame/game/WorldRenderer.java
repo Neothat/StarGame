@@ -3,6 +3,7 @@ package ru.geekbrains.stargame.game;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import ru.geekbrains.stargame.screen.ScreenManager;
 import ru.geekbrains.stargame.screen.utils.Assets;
 
 public class WorldRenderer {
@@ -28,6 +29,9 @@ public class WorldRenderer {
         sb.setLength(0);
         sb.append("SCORE: ").append(gc.getHero().getScoreView());
         font32.draw(batch, sb,20, 700);
+        sb.setLength(0);
+        sb.append("HP: ").append(gc.getHero().getHpView());
+        font32.draw(batch, sb, ScreenManager.SCREEN_WIDTH - 120, 700);
         batch.end();
     }
 }
