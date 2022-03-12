@@ -3,20 +3,17 @@ package ru.geekbrains.stargame.game;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
-import ru.geekbrains.stargame.screen.ScreenManager;
 import ru.geekbrains.stargame.screen.utils.Assets;
 
 public class WorldRenderer {
     private GameController gc;
     private SpriteBatch batch;
     private BitmapFont font32;
-    private StringBuilder sb;
 
     public WorldRenderer(GameController gc, SpriteBatch batch) {
         this.gc = gc;
         this.batch = batch;
         this.font32 = Assets.getInstance().getAssetManager().get("fonts/font32.ttf", BitmapFont.class);
-        this.sb = new StringBuilder();
     }
 
     public void render() {
@@ -26,12 +23,9 @@ public class WorldRenderer {
         gc.getBulletController().render(batch);
         gc.getHero().render(batch);
         gc.getAsteroidController().render(batch);
-        sb.setLength(0);
-        sb.append("SCORE: ").append(gc.getHero().getScoreView());
-        font32.draw(batch, sb,20, 700);
-        sb.setLength(0);
-        sb.append("HP: ").append(gc.getHero().getHpView());
-        font32.draw(batch, sb, ScreenManager.SCREEN_WIDTH - 120, 700);
+        gc.getParticleController().render(batch);
+        gc.getHero().render(batch);
+        gc.getHero().renderGUI(batch, font32);
         batch.end();
     }
 }

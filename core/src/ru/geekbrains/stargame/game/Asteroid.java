@@ -42,7 +42,9 @@ public class Asteroid implements Poolable {
         return position;
     }
 
-
+    public Vector2 getVelocity() {
+        return velocity;
+    }
 
     @Override
     public boolean isActive() {
