@@ -31,3 +31,29 @@ star16
   orig: 16, 16
   offset: 0, 0
   index: -1
+
+images2.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+firstaidkit
+  rotate: false
+  xy: 2, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+coin
+  rotate: false
+  xy: 36, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+bullet
+  rotate: false
+  xy: 70, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1

@@ -8,6 +8,7 @@ public class GameController {
     private Background background;
     private BulletController bulletController;
     private AsteroidController asteroidController;
+    private PowerUpController powerUpController;
     private ParticleController particleController;
     private Hero hero;
     private Vector2 tempVec;
@@ -40,6 +41,7 @@ public class GameController {
         this.background = new Background(this);
         this.bulletController = new BulletController(this);
         this.asteroidController = new AsteroidController(this);
+        this.powerUpController = new PowerUpController(this);
         this.particleController = new ParticleController();
         this.hero = new Hero(this);
         this.tempVec = new Vector2();
@@ -55,6 +57,7 @@ public class GameController {
         background.update(dt);
         bulletController.update(dt);
         asteroidController.update(dt);
+        powerUpController.update(dt);
         particleController.update(dt);
         hero.update(dt);
         checkCollisions();
@@ -104,5 +107,7 @@ public class GameController {
                 }
             }
         }
+
+
     }
 }
