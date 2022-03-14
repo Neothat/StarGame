@@ -57,4 +57,8 @@ public class Weapon {
             }
         }
     }
+
+    public void increaseAmmo(int amount) {
+        curBullets += amount;
+    }
 }

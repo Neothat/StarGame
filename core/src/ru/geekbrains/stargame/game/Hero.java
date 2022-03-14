@@ -163,6 +163,14 @@ public class Hero {
         hp -= amount;
     }
 
+    public void increaseHealth(int amount) {
+        hp += amount;
+    }
+
+    public void increaseAmmo(int amount) {
+        currentWeapon.increaseAmmo(amount);
+    }
+
     private void updateScore(float dt) {
         if (scoreView < score) {
             scoreView += 1500 * dt;

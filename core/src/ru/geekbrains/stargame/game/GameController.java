@@ -8,6 +8,7 @@ public class GameController {
     private Background background;
     private BulletController bulletController;
     private AsteroidController asteroidController;
+    private PowerUpController powerUpController;
     private ParticleController particleController;
     private Hero hero;
     private Vector2 tempVec;
@@ -32,6 +33,10 @@ public class GameController {
         return particleController;
     }
 
+    public PowerUpController getPowerUpController() {
+        return powerUpController;
+    }
+
     public Vector2 getTempVec() {
         return tempVec;
     }
@@ -40,6 +45,7 @@ public class GameController {
         this.background = new Background(this);
         this.bulletController = new BulletController(this);
         this.asteroidController = new AsteroidController(this);
+        this.powerUpController = new PowerUpController(this);
         this.particleController = new ParticleController();
         this.hero = new Hero(this);
         this.tempVec = new Vector2();
@@ -55,6 +61,7 @@ public class GameController {
         background.update(dt);
         bulletController.update(dt);
         asteroidController.update(dt);
+        powerUpController.update(dt);
         particleController.update(dt);
         hero.update(dt);
         checkCollisions();
@@ -102,6 +109,27 @@ public class GameController {
                     }
                     break;
                 }
+            }
+        }
+
+        // Столкновение героя и паверапа
+        for (int i = 0; i < powerUpController.getActiveList().size(); i++) {
+            PowerUp pu = powerUpController.getActiveList().get(i);
+            if (pu.getHitArea().overlaps(hero.getHitArea())) {
+                switch (pu.getType()) {
+                    case FIRST_AID_KIT:
+                        hero.increaseHealth(MathUtils.random(10, 15));
+                        break;
+                    case AMMO:
+                        hero.increaseAmmo(MathUtils.random(10, 15));
+                        break;
+                    case GOLD:
+                        hero.addScore(5000);
+                        break;
+                    default:
+                        throw new RuntimeException("Unknown type");
+                }
+                pu.deactivate();
             }
         }
     }

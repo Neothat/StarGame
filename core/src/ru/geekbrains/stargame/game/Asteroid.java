@@ -105,6 +105,10 @@ public class Asteroid implements Poolable {
         hp -= amount;
         if (hp <= 0) {
             deactivate();
+            if (MathUtils.random(5) == 0) {
+                gc.getPowerUpController().setup(position.x, position.y,
+                        MathUtils.random(-150, 150), MathUtils.random(-150, 150));
+            }
             if (scale > 0.41f) {
                 gc.getAsteroidController().setup(position.x, position.y,
                         MathUtils.random(-150, 150), MathUtils.random(-150, 150), scale - 0.3f);
