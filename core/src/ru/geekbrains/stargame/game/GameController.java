@@ -8,7 +8,7 @@ public class GameController {
     private Background background;
     private BulletController bulletController;
     private AsteroidController asteroidController;
-    private PowerUpController powerUpController;
+    private PowerUpsController powerUpsController;
     private ParticleController particleController;
     private Hero hero;
     private Vector2 tempVec;
@@ -33,8 +33,8 @@ public class GameController {
         return particleController;
     }
 
-    public PowerUpController getPowerUpController() {
-        return powerUpController;
+    public PowerUpsController getPowerUpsController() {
+        return powerUpsController;
     }
 
     public Vector2 getTempVec() {
@@ -45,7 +45,7 @@ public class GameController {
         this.background = new Background(this);
         this.bulletController = new BulletController(this);
         this.asteroidController = new AsteroidController(this);
-        this.powerUpController = new PowerUpController(this);
+        this.powerUpsController = new PowerUpsController(this);
         this.particleController = new ParticleController();
         this.hero = new Hero(this);
         this.tempVec = new Vector2();
@@ -61,12 +61,11 @@ public class GameController {
         background.update(dt);
         bulletController.update(dt);
         asteroidController.update(dt);
-        powerUpController.update(dt);
+        powerUpsController.update(dt);
         particleController.update(dt);
         hero.update(dt);
         checkCollisions();
     }
-
 
     public void checkCollisions() {
         // Столкновение астероидов и героя
@@ -104,31 +103,23 @@ public class GameController {
                             0.0f, 0.1f, 1.0f, 0.0f);
 
                     b.deactivate();
-                    if (a.takeDamage(1)) {
+                    if (a.takeDamage(hero.getCurrentWeapon().getDamage())) {
                         hero.addScore(a.getHpMax() * 100);
+                        for (int k = 0; k < 3; k++) {
+                            powerUpsController.setup(a.getPosition().x, a.getPosition().y, a.getScale() * 0.25f );
+                        }
                     }
                     break;
                 }
             }
         }
 
-        // Столкновение героя и паверапа
-        for (int i = 0; i < powerUpController.getActiveList().size(); i++) {
-            PowerUp pu = powerUpController.getActiveList().get(i);
-            if (pu.getHitArea().overlaps(hero.getHitArea())) {
-                switch (pu.getType()) {
-                    case FIRST_AID_KIT:
-                        hero.increaseHealth(MathUtils.random(10, 15));
-                        break;
-                    case AMMO:
-                        hero.increaseAmmo(MathUtils.random(10, 15));
-                        break;
-                    case GOLD:
-                        hero.addScore(5000);
-                        break;
-                    default:
-                        throw new RuntimeException("Unknown type");
-                }
+        // Столкновение поверапсов и героя
+        for (int i = 0; i < powerUpsController.getActiveList().size(); i++) {
+            PowerUp pu = powerUpsController.getActiveList().get(i);
+            if (hero.getHitArea().contains(pu.getPosition())) {
+                hero.consume(pu);
+                particleController.getEffectBuilder().takePowerUpsEffect(pu);
                 pu.deactivate();
             }
         }

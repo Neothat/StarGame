@@ -1,103 +1,79 @@
 package ru.geekbrains.stargame.game;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import ru.geekbrains.stargame.game.helpers.Poolable;
-import ru.geekbrains.stargame.screen.ScreenManager;
-import ru.geekbrains.stargame.screen.utils.Assets;
 
 public class PowerUp implements Poolable {
+    public enum Type {
+        MONEY(0), MEDKIT(1), AMMOS(2);
 
-    protected enum Type {
-        FIRST_AID_KIT,
-        GOLD,
-        AMMO;
+        int index;
+
+        Type(int index) {
+            this.index = index;
+        }
     }
 
     private GameController gc;
-    private TextureRegion texture;
     private Vector2 position;
     private Vector2 velocity;
-    private Circle hitArea;
+    private float time;
     private boolean active;
-    private float angle;
-    private float rotationSpeed;
     private Type type;
+    private int power;
+
+    public Type getType() {
+        return type;
+    }
+
+    public float getTime() {
+        return time;
+    }
+
+    public int getPower() {
+        return power;
+    }
+
+    public Vector2 getPosition() {
+        return position;
+    }
 
     @Override
     public boolean isActive() {
         return active;
     }
 
-    public Circle getHitArea() {
-        return hitArea;
-    }
-
-    public Type getType() {
-        return type;
-    }
-
-    public PowerUp(GameController gc) {
-        this.gc = gc;
-        this.position = new Vector2();
-        this.velocity = new Vector2();
-        this.hitArea = new Circle(0, 0, 0);
-        this.active = false;
-    }
-
-    public void render(SpriteBatch batch) {
-        batch.draw(texture, position.x - 16, position.y - 16, 16, 16,
-                32, 32, 1, 1, angle);
-    }
-
-    public void update(float dt) {
-        position.mulAdd(velocity, dt);
-        angle += rotationSpeed * dt;
-
-        if (position.x < -200) {
-            position.x = ScreenManager.SCREEN_WIDTH + 200;
-        }
-        if (position.x > ScreenManager.SCREEN_WIDTH + 200) {
-            position.x = -200;
-        }
-        if (position.y < -200) {
-            position.y = ScreenManager.SCREEN_HEIGHT + 200;
-        }
-        if (position.y > ScreenManager.SCREEN_HEIGHT + 200) {
-            position.y = -200;
-        }
-        hitArea.setPosition(position);
-    }
-
-    public void activate(float x, float y, float vx, float vy) {
-        position.set(x, y);
-        velocity.set(vx, vy);
-        active = true;
-        angle = MathUtils.random(0.0f, 360.0f);
-        rotationSpeed = MathUtils.random(-180.0f, 180.0f);
-        hitArea.setPosition(x, y);
-        hitArea.setRadius(32 * 0.9f);
-        type = Type.values()[MathUtils.random(2)];
-
-        switch (type) {
-            case FIRST_AID_KIT:
-                this.texture = Assets.getInstance().getAtlas().findRegion("firstaidkit");
-                break;
-            case GOLD:
-                this.texture = Assets.getInstance().getAtlas().findRegion("coin");
-                break;
-            case AMMO:
-                this.texture = Assets.getInstance().getAtlas().findRegion("bullet2");
-                break;
-            default:
-                throw new RuntimeException("Unknown type");
-        }
+    public Vector2 getVelocity() {
+        return velocity;
     }
 
     public void deactivate() {
         active = false;
+    }
+
+    public PowerUp(GameController gc) {
+        this.gc = gc;
+        this.position = new Vector2(0, 0);
+        this.velocity = new Vector2(0, 0);
+        this.active = false;
+    }
+
+    public void activate(Type type, float x, float y, int power) {
+        this.type = type;
+        this.position.set(x, y);
+        this.velocity.set(MathUtils.random(-1.0f, 1.0f), MathUtils.random(-1.0f, 1.0f));
+        this.velocity.nor().scl(50.0f);
+        this.active = true;
+        this.power = power;
+        this.time = 0.0f;
+    }
+
+    public void update(float dt) {
+        position.mulAdd(velocity, dt);
+        time += dt;
+        if (time >= 7.0f) {
+            deactivate();
+        }
     }
 }

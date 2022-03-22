@@ -3,17 +3,17 @@ package ru.geekbrains.stargame;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import ru.geekbrains.stargame.screen.GameScreen;
+import ru.geekbrains.stargame.screen.ScreenManager;
 
 public class StarGame extends Game {
     private SpriteBatch batch;
-    private GameScreen gameScreen;
+
 
     @Override
     public void create() {
         batch = new SpriteBatch();
-        this.gameScreen = new GameScreen(batch);
-        setScreen(gameScreen);
+        ScreenManager.getInstance().init(this, batch);
+        ScreenManager.getInstance().changeScreen(ScreenManager.ScreenType.MENU);
     }
 
     @Override
