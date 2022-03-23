@@ -57,6 +57,10 @@ public class Hero {
         return currentWeapon;
     }
 
+    public int getMoney() {
+        return money;
+    }
+
     public Hero(GameController gc) {
         this.gc = gc;
         this.texture = Assets.getInstance().getAtlas().findRegion("ship");
@@ -64,7 +68,7 @@ public class Hero {
         this.velocity = new Vector2(0, 0);
         this.angle = 0.0f;
         this.enginePower = 700.0f;
-        this.hpMax = 100;
+        this.hpMax = 10;
         this.hp = hpMax;
         this.sb = new StringBuilder();
         this.hitArea = new Circle(position, 28);
@@ -113,6 +117,10 @@ public class Hero {
     public void update(float dt) {
         fireTimer += dt;
         updateScore(dt);
+
+        if (hp <= 0) {
+            ScreenManager.getInstance().changeScreen(ScreenManager.ScreenType.GAME_OVER);
+        }
 
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             tryToFire();

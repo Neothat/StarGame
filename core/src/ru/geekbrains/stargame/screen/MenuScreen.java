@@ -14,9 +14,9 @@ import ru.geekbrains.stargame.screen.utils.Assets;
 
 
 public class MenuScreen extends AbstractScreen {
-    private BitmapFont font72;
-    private BitmapFont font24;
-    private Stage stage;
+    protected BitmapFont font72;
+    protected BitmapFont font24;
+    protected Stage stage;
 
     public MenuScreen(SpriteBatch batch) {
         super(batch);

@@ -25,6 +25,10 @@ public class GameScreen extends AbstractScreen {
         this.pauseActivated = pauseActivated;
     }
 
+    public GameController getGc() {
+        return gc;
+    }
+
     @Override
     public void show() {
         Assets.getInstance().loadAssets(ScreenManager.ScreenType.GAME);

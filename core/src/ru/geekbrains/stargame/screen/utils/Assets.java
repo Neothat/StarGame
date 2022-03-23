@@ -40,6 +40,7 @@ public class Assets {
                 createStandardFont(32);
                 break;
             case MENU:
+            case GAME_OVER:
                 assetManager.load("images/game.pack", TextureAtlas.class);
                 createStandardFont(72);
                 createStandardFont(24);
@@ -65,7 +66,7 @@ public class Assets {
         assetManager.clear();
     }
 
-    public void makeLinks(){
+    public void makeLinks() {
         textureAtlas = assetManager.get("images/game.pack", TextureAtlas.class);
     }
 }

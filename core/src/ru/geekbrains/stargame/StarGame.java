@@ -8,7 +8,6 @@ import ru.geekbrains.stargame.screen.ScreenManager;
 public class StarGame extends Game {
     private SpriteBatch batch;
 
-
     @Override
     public void create() {
         batch = new SpriteBatch();
