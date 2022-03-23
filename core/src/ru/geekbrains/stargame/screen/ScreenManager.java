@@ -35,6 +35,10 @@ public class ScreenManager {
         return viewport;
     }
 
+    public GameScreen getGameScreen() {
+        return gameScreen;
+    }
+
     private ScreenManager() {
     }
 

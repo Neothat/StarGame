@@ -58,13 +58,15 @@ public class GameController {
     }
 
     public void update(float dt) {
-        background.update(dt);
-        bulletController.update(dt);
-        asteroidController.update(dt);
-        powerUpsController.update(dt);
-        particleController.update(dt);
-        hero.update(dt);
-        checkCollisions();
+        if (!ScreenManager.getInstance().getGameScreen().isPauseActivated()) {
+            background.update(dt);
+            bulletController.update(dt);
+            asteroidController.update(dt);
+            powerUpsController.update(dt);
+            particleController.update(dt);
+            hero.update(dt);
+            checkCollisions();
+        }
     }
 
     public void checkCollisions() {
@@ -106,7 +108,7 @@ public class GameController {
                     if (a.takeDamage(hero.getCurrentWeapon().getDamage())) {
                         hero.addScore(a.getHpMax() * 100);
                         for (int k = 0; k < 3; k++) {
-                            powerUpsController.setup(a.getPosition().x, a.getPosition().y, a.getScale() * 0.25f );
+                            powerUpsController.setup(a.getPosition().x, a.getPosition().y, a.getScale() * 0.25f);
                         }
                     }
                     break;
