@@ -128,6 +128,12 @@ public class GameController {
         // Столкновение поверапсов и героя
         for (int i = 0; i < powerUpsController.getActiveList().size(); i++) {
             PowerUp pu = powerUpsController.getActiveList().get(i);
+            if (hero.getHitArea().overlaps(pu.getHitArea())){
+                float dst = hero.getPosition().dst(pu.getPosition());
+                tempVec.set(hero.getPosition()).sub(pu.getPosition()).nor();
+                pu.getPosition().mulAdd(tempVec, 1);
+                pu.getVelocity().mulAdd(tempVec, 10);
+            }
             if (hero.getHitArea().contains(pu.getPosition())) {
                 hero.consume(pu);
                 particleController.getEffectBuilder().takePowerUpsEffect(pu);
