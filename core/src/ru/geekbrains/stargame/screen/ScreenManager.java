@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import ru.geekbrains.stargame.StarGame;
+import ru.geekbrains.stargame.game.Hero;
 import ru.geekbrains.stargame.screen.utils.Assets;
 
 public class ScreenManager {
@@ -36,11 +37,11 @@ public class ScreenManager {
         return viewport;
     }
 
-    public GameScreen getGameScreen() {
-        return gameScreen;
+    private ScreenManager() {
     }
 
-    private ScreenManager() {
+    public GameScreen getGameScreen() {
+        return gameScreen;
     }
 
     public void init(StarGame game, SpriteBatch batch) {
@@ -58,7 +59,7 @@ public class ScreenManager {
         viewport.apply();
     }
 
-    public void changeScreen(ScreenType type) {
+    public void changeScreen(ScreenType type, Object... args) {
         Screen screen = game.getScreen();
         Assets.getInstance().clear();
         if (screen != null) {
@@ -77,6 +78,7 @@ public class ScreenManager {
                 break;
             case GAME_OVER:
                 targetScreen = gameOverScreen;
+                gameOverScreen.setDefeatedHero((Hero) args[0]);
                 Assets.getInstance().loadAssets(ScreenType.GAME_OVER);
                 break;
         }

@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
+import ru.geekbrains.stargame.game.Background;
 import ru.geekbrains.stargame.screen.utils.Assets;
 
 
@@ -17,6 +18,7 @@ public class MenuScreen extends AbstractScreen {
     protected BitmapFont font72;
     protected BitmapFont font24;
     protected Stage stage;
+    private Background background;
 
     public MenuScreen(SpriteBatch batch) {
         super(batch);
@@ -24,6 +26,7 @@ public class MenuScreen extends AbstractScreen {
 
     @Override
     public void show() {
+        this.background = new Background(null);
         this.stage = new Stage(ScreenManager.getInstance().getViewport(), batch);
         this.font72 = Assets.getInstance().getAssetManager().get("fonts/font72.ttf");
         this.font24 = Assets.getInstance().getAssetManager().get("fonts/font24.ttf");
@@ -63,6 +66,7 @@ public class MenuScreen extends AbstractScreen {
     }
 
     public void update(float dt) {
+        background.update(dt);
         stage.act(dt);
     }
 
@@ -71,13 +75,15 @@ public class MenuScreen extends AbstractScreen {
         update(delta);
         ScreenUtils.clear(0.0f, 0.0f, 0.2f, 1);
         batch.begin();
-        font72.draw(batch, "Star Game 2022", 0, 600, 1280, 1, false);
+        background.render(batch);
+        font72.draw(batch, "Star Game 2022", 0, 500, 1280, 1, false);
         batch.end();
         stage.draw();
     }
 
     @Override
     public void dispose() {
-
+        background.dispose();
+        stage.dispose();
     }
 }

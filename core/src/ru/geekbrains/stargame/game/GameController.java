@@ -1,7 +1,10 @@
 package ru.geekbrains.stargame.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import ru.geekbrains.stargame.screen.ScreenManager;
 
 public class GameController {
@@ -12,6 +15,11 @@ public class GameController {
     private ParticleController particleController;
     private Hero hero;
     private Vector2 tempVec;
+    private Stage stage;
+
+    public Stage getStage() {
+        return stage;
+    }
 
     public BulletController getBulletController() {
         return bulletController;
@@ -37,11 +45,7 @@ public class GameController {
         return powerUpsController;
     }
 
-    public Vector2 getTempVec() {
-        return tempVec;
-    }
-
-    public GameController() {
+    public GameController(SpriteBatch batch) {
         this.background = new Background(this);
         this.bulletController = new BulletController(this);
         this.asteroidController = new AsteroidController(this);
@@ -49,6 +53,9 @@ public class GameController {
         this.particleController = new ParticleController();
         this.hero = new Hero(this);
         this.tempVec = new Vector2();
+        this.stage = new Stage(ScreenManager.getInstance().getViewport(), batch);
+        this.stage.addActor(hero.getShop());
+        Gdx.input.setInputProcessor(stage);
 
         for (int i = 0; i < 3; i++) {
             asteroidController.setup(MathUtils.random(0, ScreenManager.SCREEN_WIDTH),
@@ -58,14 +65,16 @@ public class GameController {
     }
 
     public void update(float dt) {
-        if (!ScreenManager.getInstance().getGameScreen().isPauseActivated()) {
-            background.update(dt);
-            bulletController.update(dt);
-            asteroidController.update(dt);
-            powerUpsController.update(dt);
-            particleController.update(dt);
-            hero.update(dt);
-            checkCollisions();
+        background.update(dt);
+        bulletController.update(dt);
+        asteroidController.update(dt);
+        powerUpsController.update(dt);
+        particleController.update(dt);
+        hero.update(dt);
+        stage.act(dt);
+        checkCollisions();
+        if (!hero.isAlive()) {
+            ScreenManager.getInstance().changeScreen(ScreenManager.ScreenType.GAME_OVER, hero);
         }
     }
 
@@ -125,5 +134,9 @@ public class GameController {
                 pu.deactivate();
             }
         }
+    }
+
+    public void dispose() {
+        background.dispose();
     }
 }

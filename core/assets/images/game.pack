@@ -24,16 +24,23 @@ simpleButton
   orig: 320, 80
   offset: 0, 0
   index: -1
-ship
+shortButton
   rotate: false
   xy: 260, 100
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+ship
+  rotate: false
+  xy: 260, 182
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 smButton
   rotate: false
-  xy: 326, 100
+  xy: 342, 100
   size: 120, 32
   orig: 120, 32
   offset: 0, 0
