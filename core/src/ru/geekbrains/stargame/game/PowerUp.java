@@ -45,10 +45,6 @@ public class PowerUp implements Poolable {
         return hitArea;
     }
 
-    public void setHitArea(Circle hitArea) {
-        this.hitArea = hitArea;
-    }
-
     @Override
     public boolean isActive() {
         return active;
