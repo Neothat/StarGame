@@ -79,7 +79,7 @@ public class PowerUp implements Poolable {
     public void update(float dt) {
         position.mulAdd(velocity, dt);
         time += dt;
-        if (time >= 17.0f) {
+        if (time >= 7.0f) {
             deactivate();
         }
         hitArea.setPosition(position);
