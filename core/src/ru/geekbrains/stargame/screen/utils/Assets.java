@@ -39,7 +39,7 @@ public class Assets {
         switch (type) {
             case GAME:
                 assetManager.load("images/game.pack", TextureAtlas.class);
-                assetManager.load("audio/mortal.mp3", Music.class);
+                assetManager.load("audio/Spear of Justice.mp3", Music.class);
                 assetManager.load("audio/shoot.mp3", Sound.class);
                 createStandardFont(72);
                 createStandardFont(32);
@@ -47,12 +47,13 @@ public class Assets {
                 break;
             case MENU:
                 assetManager.load("images/game.pack", TextureAtlas.class);
-                assetManager.load("audio/music.mp3", Music.class);
+                assetManager.load("audio/Start Menu.mp3", Music.class);
                 createStandardFont(72);
                 createStandardFont(24);
                 break;
             case GAME_OVER:
                 assetManager.load("images/game.pack", TextureAtlas.class);
+                assetManager.load("audio/Determination.mp3", Music.class);
                 createStandardFont(72);
                 createStandardFont(48);
                 createStandardFont(24);

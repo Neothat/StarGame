@@ -49,7 +49,7 @@ public class Weapon {
     public void fire() {
         if (curBullets > 0) {
             curBullets--;
-            shootSound.play();
+            shootSound.play(0.3f);
 
             for (int i = 0; i < slots.length; i++) {
                 float x, y, vx, vy;

@@ -1,6 +1,7 @@
 package ru.geekbrains.stargame.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -15,10 +16,11 @@ import ru.geekbrains.stargame.screen.utils.Assets;
 
 
 public class MenuScreen extends AbstractScreen {
-    protected BitmapFont font72;
-    protected BitmapFont font24;
-    protected Stage stage;
+    private BitmapFont font72;
+    private BitmapFont font24;
+    private Stage stage;
     private Background background;
+    private Music music;
 
     public MenuScreen(SpriteBatch batch) {
         super(batch);
@@ -63,6 +65,11 @@ public class MenuScreen extends AbstractScreen {
         stage.addActor(btnNewGame);
         stage.addActor(btnExitGame);
         skin.dispose();
+
+        this.music = Assets.getInstance().getAssetManager().get("audio/Start Menu.mp3");
+        this.music.setLooping(true);
+        this.music.setVolume(0.1f);
+        this.music.play();
     }
 
     public void update(float dt) {

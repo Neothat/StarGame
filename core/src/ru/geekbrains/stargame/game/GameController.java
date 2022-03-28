@@ -24,7 +24,6 @@ public class GameController {
     private float timer;
     private Music music;
 
-
     public float getTimer() {
         return timer;
     }
@@ -84,8 +83,9 @@ public class GameController {
         this.level = 1;
         generateBigAsteroids(2);
 
-        this.music = Assets.getInstance().getAssetManager().get("audio/mortal.mp3");
+        this.music = Assets.getInstance().getAssetManager().get("audio/Spear of Justice.mp3");
         this.music.setLooping(true);
+        this.music.setVolume(0.1f);
         this.music.play();
 
     }
