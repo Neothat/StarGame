@@ -12,7 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import ru.geekbrains.stargame.screen.utils.Assets;
 
 public class Shop extends Group {
-
     private Hero hero;
     private BitmapFont font24;
 
@@ -42,13 +41,13 @@ public class Shop extends Group {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 thisShop.setVisible(false);
+                hero.setPause(false);
             }
         });
         btnClose.setTransform(true);
         btnClose.setScale(0.5f);
         btnClose.setPosition(340, 340);
         this.addActor(btnClose);
-
 
         final TextButton btnHpMax = new TextButton("HpMax", textButtonStyle);
         btnHpMax.addListener(new ChangeListener() {
@@ -58,6 +57,7 @@ public class Shop extends Group {
                     if (hero.upgrade(Hero.Skill.HP_MAX)) {
                         hero.decreaseMoney(Hero.Skill.HP_MAX.cost);
                     }
+                    ;
                 }
             }
         });
@@ -73,6 +73,7 @@ public class Shop extends Group {
                     if (hero.upgrade(Hero.Skill.HP)) {
                         hero.decreaseMoney(Hero.Skill.HP.cost);
                     }
+                    ;
                 }
             }
         });
@@ -88,12 +89,30 @@ public class Shop extends Group {
                     if (hero.upgrade(Hero.Skill.WEAPON)) {
                         hero.decreaseMoney(Hero.Skill.WEAPON.cost);
                     }
+                    ;
                 }
             }
         });
 
         btnWeapon.setPosition(20, 100);
         this.addActor(btnWeapon);
+
+        final TextButton btnMagnet = new TextButton("Magnet", textButtonStyle);
+        btnMagnet.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (hero.isMoneyEnough(Hero.Skill.MAGNET.cost)) {
+                    if (hero.upgrade(Hero.Skill.MAGNET)) {
+                        hero.decreaseMoney(Hero.Skill.MAGNET.cost);
+                    }
+                    ;
+                }
+            }
+        });
+
+        btnMagnet.setPosition(20, 10);
+        this.addActor(btnMagnet);
+
         this.setPosition(20, 20);
         setVisible(false);
         skin.dispose();

@@ -23,7 +23,6 @@ public class PowerUp implements Poolable {
     private boolean active;
     private Type type;
     private int power;
-    private Circle hitArea;
 
     public Type getType() {
         return type;
@@ -39,10 +38,6 @@ public class PowerUp implements Poolable {
 
     public Vector2 getPosition() {
         return position;
-    }
-
-    public Circle getHitArea() {
-        return hitArea;
     }
 
     @Override
@@ -63,7 +58,6 @@ public class PowerUp implements Poolable {
         this.position = new Vector2(0, 0);
         this.velocity = new Vector2(0, 0);
         this.active = false;
-        this.hitArea = new Circle(position, 100);
     }
 
     public void activate(Type type, float x, float y, int power) {
@@ -82,6 +76,5 @@ public class PowerUp implements Poolable {
         if (time >= 7.0f) {
             deactivate();
         }
-        hitArea.setPosition(position);
     }
 }
