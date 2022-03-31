@@ -34,7 +34,7 @@ public class Weapon {
     }
 
     public Weapon(GameController gc, Ship ship, float firePeriod, int damage,
-                  float bulletSpeed, int maxBullets, Vector3[] slots) {
+				  float bulletSpeed, int maxBullets, Vector3[] slots) {
         this.gc = gc;
         this.ship = ship;
         this.firePeriod = firePeriod;
@@ -49,7 +49,7 @@ public class Weapon {
     public void fire() {
         if (curBullets > 0) {
             curBullets--;
-            shootSound.play(0.3f);
+            shootSound.play();
 
             for (int i = 0; i < slots.length; i++) {
                 float x, y, vx, vy;
@@ -58,7 +58,7 @@ public class Weapon {
                 vx = ship.getVelocity().x + bulletSpeed * MathUtils.cosDeg(ship.getAngle() + slots[i].z);
                 vy = ship.getVelocity().y + bulletSpeed * MathUtils.sinDeg(ship.getAngle() + slots[i].z);
 
-                gc.getBulletController().setup(x, y, vx, vy);
+                gc.getBulletController().setup(ship, x, y, vx, vy);
             }
         }
     }

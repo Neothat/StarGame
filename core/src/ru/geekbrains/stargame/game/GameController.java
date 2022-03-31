@@ -25,6 +25,7 @@ public class GameController {
     private float timer;
     private Music music;
 
+
     public float getTimer() {
         return timer;
     }
@@ -39,6 +40,10 @@ public class GameController {
 
     public Stage getStage() {
         return stage;
+    }
+
+    public UfoController getUfoController() {
+        return ufoController;
     }
 
     public InfoController getInfoController() {
@@ -59,10 +64,6 @@ public class GameController {
 
     public BulletController getBulletController() {
         return bulletController;
-    }
-
-    public UfoController getUfoController() {
-        return ufoController;
     }
 
     public Background getBackground() {
@@ -89,12 +90,11 @@ public class GameController {
         this.level = 1;
         generateBigAsteroids(2);
 
+        ufoController.setup(100, 100);
+
         this.music = Assets.getInstance().getAssetManager().get("audio/Spear of Justice.mp3");
         this.music.setLooping(true);
-        this.music.setVolume(0.3f);
         this.music.play();
-
-        ufoController.setup(100, 100);
 
     }
 
@@ -154,24 +154,47 @@ public class GameController {
             }
         }
 
+        //столкновение астероидов и ботов
+        for (int i = 0; i < asteroidController.getActiveList().size(); i++) {
+            Asteroid a = asteroidController.getActiveList().get(i);
+            for (int j = 0; j < ufoController.getActiveList().size(); j++) {
+                Ufo u = ufoController.getActiveList().get(j);
+
+                if (u.getHitArea().overlaps(a.getHitArea())) {
+                    float dst = a.getPosition().dst(u.getPosition());
+                    float halfOverLen = (a.getHitArea().radius + u.getHitArea().radius - dst) / 2.0f;
+                    tempVec.set(u.getPosition()).sub(a.getPosition()).nor();
+                    u.getPosition().mulAdd(tempVec, halfOverLen);
+                    a.getPosition().mulAdd(tempVec, -halfOverLen);
+
+                    float sumScl = u.getHitArea().radius * 2 + a.getHitArea().radius;
+                    u.getVelocity().mulAdd(tempVec, 200.0f * a.getHitArea().radius / sumScl);
+                    a.getVelocity().mulAdd(tempVec, -200.0f * u.getHitArea().radius / sumScl);
+
+                    a.takeDamage(1);
+                    u.takeDamage(level);
+                }
+            }
+        }
+
         //столкновение пуль и астероидов
         for (int i = 0; i < bulletController.getActiveList().size(); i++) {
             Bullet b = bulletController.getActiveList().get(i);
             for (int j = 0; j < asteroidController.getActiveList().size(); j++) {
                 Asteroid a = asteroidController.getActiveList().get(j);
                 if (a.getHitArea().contains(b.getPosition())) {
-                    particleController.setup(b.getPosition().x + MathUtils.random(-4, 4), b.getPosition().y + MathUtils.random(-4, 4),
-                            b.getVelocity().x * -0.3f + MathUtils.random(-30, 30), b.getVelocity().y * -0.3f + MathUtils.random(-30, 30),
-                            0.2f,
-                            2.5f, 1.2f,
-                            1.0f, 1.0f, 1.0f, 1.0f,
-                            0.0f, 0.1f, 1.0f, 0.0f);
+                    particleController.getEffectBuilder().bulletCollideWithAsteroid(b);
 
                     b.deactivate();
-                    if (a.takeDamage(hero.getCurrentWeapon().getDamage())) {
-                        hero.addScore(a.getHpMax() * 100);
-                        for (int k = 0; k < 3; k++) {
-                            powerUpsController.setup(a.getPosition().x, a.getPosition().y, a.getScale() * 0.25f);
+                    if (a.takeDamage(b.getOwner().getCurrentWeapon().getDamage())) {
+                        if (b.getOwner().getOwnerType() == OwnerType.PLAYER) {
+                            hero.addScore(a.getHpMax() * 100);
+                            for (int k = 0; k < 3; k++) {
+                                powerUpsController.setup(a.getPosition().x, a.getPosition().y, a.getScale() * 0.25f);
+                            }
+                            if (MathUtils.random(0, 100) < 20 * a.getScale()) {
+                                ufoController.setup(a.getPosition().x, a.getPosition().y);
+                            }
                         }
                     }
                     break;
@@ -191,6 +214,28 @@ public class GameController {
                 hero.consume(pu);
                 particleController.getEffectBuilder().takePowerUpsEffect(pu);
                 pu.deactivate();
+            }
+        }
+
+        //столкновение пуль и кораблей
+        for (int i = 0; i < bulletController.getActiveList().size(); i++) {
+            Bullet b = bulletController.getActiveList().get(i);
+
+            if (b.getOwner().getOwnerType() == OwnerType.BOT) {
+                if (hero.getHitArea().contains(b.getPosition())) {
+                    hero.takeDamage(b.getOwner().getCurrentWeapon().getDamage());
+                    b.deactivate();
+                }
+            }
+
+            if (b.getOwner().getOwnerType() == OwnerType.PLAYER) {
+                for (int j = 0; j < ufoController.getActiveList().size(); j++) {
+                    Ufo ufo = ufoController.getActiveList().get(j);
+                    if (ufo.getHitArea().contains(b.getPosition())) {
+                        ufo.takeDamage(b.getOwner().getCurrentWeapon().getDamage());
+                        b.deactivate();
+                    }
+                }
             }
         }
     }

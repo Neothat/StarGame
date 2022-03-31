@@ -2,6 +2,7 @@ package ru.geekbrains.stargame.game;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import ru.geekbrains.stargame.screen.ScreenManager;
@@ -20,6 +21,7 @@ public class Ship {
     protected Weapon currentWeapon;
     protected int weaponNum;
     protected Weapon[] weapons;
+    protected OwnerType ownerType;
 
     public Weapon getCurrentWeapon() {
         return currentWeapon;
@@ -41,6 +43,10 @@ public class Ship {
         return angle;
     }
 
+    public OwnerType getOwnerType() {
+        return ownerType;
+    }
+
     public boolean isAlive() {
         return hp > 0;
     }
@@ -54,6 +60,16 @@ public class Ship {
         createWeapons();
         this.weaponNum = 0;
         this.currentWeapon = weapons[weaponNum];
+    }
+
+    public void accelerate(float dt){
+        velocity.x += MathUtils.cosDeg(angle) * enginePower * dt;
+        velocity.y += MathUtils.sinDeg(angle) * enginePower * dt;
+    }
+
+    public void brake(float dt){
+        velocity.x += MathUtils.cosDeg(angle) * enginePower * -0.5f * dt;
+        velocity.y += MathUtils.sinDeg(angle) * enginePower * -0.5f * dt;
     }
 
     public void update(float dt) {

@@ -23,13 +23,15 @@ public class Ufo extends Ship implements Poolable {
         this.hitArea = new Circle(position, 28);
         this.active = false;
         this.tempVec = new Vector2();
+        this.ownerType = OwnerType.BOT;
         this.weaponNum = MathUtils.random(gc.getLevel() + 1);
         this.currentWeapon = weapons[weaponNum];
     }
 
     public void activate(float x, float y) {
         position.set(x, y);
-        hp = 50;
+        hpMax = 30 + gc.getLevel() * 20;
+        hp = hpMax;
         active = true;
     }
 
@@ -49,9 +51,8 @@ public class Ufo extends Ship implements Poolable {
         tempVec.set(gc.getHero().getPosition()).sub(position).nor();
         angle = tempVec.angleDeg();
 
-        if (gc.getHero().getPosition().dst(position) > 0) {
-            velocity.x += MathUtils.cosDeg(angle) * enginePower * dt;
-            velocity.y += MathUtils.sinDeg(angle) * enginePower * dt;
+        if (gc.getHero().getPosition().dst(position) > 200) {
+            accelerate(dt);
 
             float bx = position.x + MathUtils.cosDeg(angle + 180) * 25;
             float by = position.y + MathUtils.sinDeg(angle + 180) * 25;
@@ -63,6 +64,10 @@ public class Ufo extends Ship implements Poolable {
                         1.2f, 0.2f,
                         0.0f, 0.5f, 1.0f, 1.0f,
                         0.0f, 1.0f, 1.0f, 0.0f);
+            }
+
+            if (gc.getHero().getPosition().dst(position) < 300) {
+                tryToFire();
             }
         }
     }
