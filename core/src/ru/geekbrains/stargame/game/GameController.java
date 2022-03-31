@@ -91,7 +91,7 @@ public class GameController {
 
         this.music = Assets.getInstance().getAssetManager().get("audio/Spear of Justice.mp3");
         this.music.setLooping(true);
-        this.music.setVolume(0.1f);
+        this.music.setVolume(0.3f);
         this.music.play();
 
         ufoController.setup(100, 100);
