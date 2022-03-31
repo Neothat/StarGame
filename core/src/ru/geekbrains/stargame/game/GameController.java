@@ -16,6 +16,7 @@ public class GameController {
     private ParticleController particleController;
     private PowerUpsController powerUpsController;
     private InfoController infoController;
+    private UfoController ufoController;
     private Hero hero;
     private Vector2 tempVec;
     private Stage stage;
@@ -60,6 +61,10 @@ public class GameController {
         return bulletController;
     }
 
+    public UfoController getUfoController() {
+        return ufoController;
+    }
+
     public Background getBackground() {
         return background;
     }
@@ -75,6 +80,7 @@ public class GameController {
         this.particleController = new ParticleController();
         this.powerUpsController = new PowerUpsController(this);
         this.infoController = new InfoController();
+        this.ufoController = new UfoController(this);
         this.hero = new Hero(this);
         this.tempVec = new Vector2();
         this.stage = new Stage(ScreenManager.getInstance().getViewport(), batch);
@@ -87,6 +93,8 @@ public class GameController {
         this.music.setLooping(true);
         this.music.setVolume(0.1f);
         this.music.play();
+
+        ufoController.setup(100, 100);
 
     }
 
@@ -109,6 +117,7 @@ public class GameController {
         particleController.update(dt);
         powerUpsController.update(dt);
         infoController.update(dt);
+        ufoController.update(dt);
         hero.update(dt);
         stage.act(dt);
         checkCollisions();
