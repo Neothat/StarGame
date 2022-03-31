@@ -31,16 +31,23 @@ shortButton
   orig: 80, 80
   offset: 0, 0
   index: -1
-ship
+ufo
   rotate: false
   xy: 260, 182
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-smButton
+ship
   rotate: false
   xy: 342, 100
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+smButton
+  rotate: false
+  xy: 2, 342
   size: 120, 32
   orig: 120, 32
   offset: 0, 0
