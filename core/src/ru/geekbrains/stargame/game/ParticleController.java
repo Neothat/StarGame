@@ -9,13 +9,6 @@ import ru.geekbrains.stargame.screen.utils.Assets;
 
 public class ParticleController extends ObjectPool<Particle> {
     public class EffectBuilder {
-        public void buildMonsterSplash(float x, float y) {
-            for (int i = 0; i < 15; i++) {
-                float randomAngle = MathUtils.random(0, 6.28f);
-                float randomSpeed = MathUtils.random(0, 50.0f);
-                setup(x, y, (float) Math.cos(randomAngle) * randomSpeed, (float) Math.sin(randomAngle) * randomSpeed, 1.2f, 2.0f, 1.8f, 1, 0, 0, 1, 1, 0, 0, 0.2f);
-            }
-        }
 
         public void takePowerUpsEffect(PowerUp p) {
             switch (p.getType()) {
@@ -95,10 +88,6 @@ public class ParticleController extends ObjectPool<Particle> {
     private TextureRegion oneParticle;
     private EffectBuilder effectBuilder;
 
-    public EffectBuilder getEffectBuilder() {
-        return effectBuilder;
-    }
-
     public ParticleController() {
         this.oneParticle = Assets.getInstance().getAtlas().findRegion("star16");
         this.effectBuilder = new EffectBuilder();
@@ -155,5 +144,9 @@ public class ParticleController extends ObjectPool<Particle> {
 
     public float lerp(float value1, float value2, float point) {
         return value1 + (value2 - value1) * point;
+    }
+
+    public EffectBuilder getEffectBuilder() {
+        return effectBuilder;
     }
 }

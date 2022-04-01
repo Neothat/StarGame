@@ -41,7 +41,6 @@ public class WorldRenderer {
                     ScreenManager.SCREEN_WIDTH, Align.center, false);
         }
         batch.end();
-
         gc.getStage().draw();
     }
 }

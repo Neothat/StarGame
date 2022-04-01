@@ -15,21 +15,8 @@ import ru.geekbrains.stargame.screen.ScreenManager;
 
 public class Assets {
     private static final Assets ourInstance = new Assets();
-
-    public static Assets getInstance() {
-        return ourInstance;
-    }
-
     private AssetManager assetManager;
     private TextureAtlas textureAtlas;
-
-    public TextureAtlas getAtlas() {
-        return textureAtlas;
-    }
-
-    public AssetManager getAssetManager() {
-        return assetManager;
-    }
 
     private Assets() {
         assetManager = new AssetManager();
@@ -81,5 +68,17 @@ public class Assets {
 
     public void makeLinks() {
         textureAtlas = assetManager.get("images/game.pack", TextureAtlas.class);
+    }
+
+    public static Assets getInstance() {
+        return ourInstance;
+    }
+
+    public AssetManager getAssetManager() {
+        return assetManager;
+    }
+
+    public TextureAtlas getAtlas() {
+        return textureAtlas;
     }
 }

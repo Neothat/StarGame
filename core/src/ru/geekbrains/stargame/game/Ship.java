@@ -23,34 +23,6 @@ public class Ship {
     protected Weapon[] weapons;
     protected OwnerType ownerType;
 
-    public Weapon getCurrentWeapon() {
-        return currentWeapon;
-    }
-
-    public Circle getHitArea() {
-        return hitArea;
-    }
-
-    public Vector2 getPosition() {
-        return position;
-    }
-
-    public Vector2 getVelocity() {
-        return velocity;
-    }
-
-    public float getAngle() {
-        return angle;
-    }
-
-    public OwnerType getOwnerType() {
-        return ownerType;
-    }
-
-    public boolean isAlive() {
-        return hp > 0;
-    }
-
     public Ship(GameController gc, float enginePower, int hpMax) {
         this.gc = gc;
         this.enginePower = enginePower;
@@ -62,12 +34,12 @@ public class Ship {
         this.currentWeapon = weapons[weaponNum];
     }
 
-    public void accelerate(float dt){
+    public void accelerate(float dt) {
         velocity.x += MathUtils.cosDeg(angle) * enginePower * dt;
         velocity.y += MathUtils.sinDeg(angle) * enginePower * dt;
     }
 
-    public void brake(float dt){
+    public void brake(float dt) {
         velocity.x += MathUtils.cosDeg(angle) * enginePower * -0.5f * dt;
         velocity.y += MathUtils.sinDeg(angle) * enginePower * -0.5f * dt;
     }
@@ -161,5 +133,33 @@ public class Ship {
             fireTimer = 0.0f;
             currentWeapon.fire();
         }
+    }
+
+    public Weapon getCurrentWeapon() {
+        return currentWeapon;
+    }
+
+    public Circle getHitArea() {
+        return hitArea;
+    }
+
+    public Vector2 getPosition() {
+        return position;
+    }
+
+    public Vector2 getVelocity() {
+        return velocity;
+    }
+
+    public float getAngle() {
+        return angle;
+    }
+
+    public OwnerType getOwnerType() {
+        return ownerType;
+    }
+
+    public boolean isAlive() {
+        return hp <= 0;
     }
 }

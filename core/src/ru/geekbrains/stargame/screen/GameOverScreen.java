@@ -20,10 +20,6 @@ public class GameOverScreen extends AbstractScreen {
     private StringBuilder sb;
     private Music music;
 
-    public void setDefeatedHero(Hero defeatedHero) {
-        this.defeatedHero = defeatedHero;
-    }
-
     public GameOverScreen(SpriteBatch batch) {
         super(batch);
     }
@@ -67,5 +63,9 @@ public class GameOverScreen extends AbstractScreen {
     @Override
     public void dispose() {
         background.dispose();
+    }
+
+    public void setDefeatedHero(Hero defeatedHero) {
+        this.defeatedHero = defeatedHero;
     }
 }

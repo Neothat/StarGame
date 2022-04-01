@@ -44,7 +44,7 @@ public class Ufo extends Ship implements Poolable {
     public void update(float dt) {
         super.update(dt);
 
-        if (!isAlive()) {
+        if (isAlive()) {
             active = false;
         }
 

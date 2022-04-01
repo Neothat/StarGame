@@ -25,55 +25,6 @@ public class GameController {
     private float timer;
     private Music music;
 
-
-    public float getTimer() {
-        return timer;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public void setPause(boolean pause) {
-        this.pause = pause;
-    }
-
-    public Stage getStage() {
-        return stage;
-    }
-
-    public UfoController getUfoController() {
-        return ufoController;
-    }
-
-    public InfoController getInfoController() {
-        return infoController;
-    }
-
-    public PowerUpsController getPowerUpsController() {
-        return powerUpsController;
-    }
-
-    public ParticleController getParticleController() {
-        return particleController;
-    }
-
-    public AsteroidController getAsteroidController() {
-        return asteroidController;
-    }
-
-    public BulletController getBulletController() {
-        return bulletController;
-    }
-
-    public Background getBackground() {
-        return background;
-    }
-
-    public Hero getHero() {
-        return hero;
-    }
-
     public GameController(SpriteBatch batch) {
         this.background = new Background(this);
         this.bulletController = new BulletController(this);
@@ -88,13 +39,11 @@ public class GameController {
         this.stage.addActor(hero.getShop());
         Gdx.input.setInputProcessor(stage);
         this.level = 1;
-        generateBigAsteroids(2);
-
-        ufoController.setup(100, 100);
-
         this.music = Assets.getInstance().getAssetManager().get("audio/Spear of Justice.mp3");
         this.music.setLooping(true);
         this.music.play();
+        generateBigAsteroids(2);
+        ufoController.setup(100, 100);
 
     }
 
@@ -121,7 +70,7 @@ public class GameController {
         hero.update(dt);
         stage.act(dt);
         checkCollisions();
-        if (!hero.isAlive()) {
+        if (hero.isAlive()) {
             ScreenManager.getInstance().changeScreen(ScreenManager.ScreenType.GAME_OVER, hero);
         }
         if (asteroidController.getActiveList().size() == 0) {
@@ -130,7 +79,6 @@ public class GameController {
             timer = 0;
         }
     }
-
 
     public void checkCollisions() {
         //столкновение астероидов и героя
@@ -242,5 +190,53 @@ public class GameController {
 
     public void dispose() {
         background.dispose();
+    }
+
+    public float getTimer() {
+        return timer;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setPause(boolean pause) {
+        this.pause = pause;
+    }
+
+    public Stage getStage() {
+        return stage;
+    }
+
+    public UfoController getUfoController() {
+        return ufoController;
+    }
+
+    public InfoController getInfoController() {
+        return infoController;
+    }
+
+    public PowerUpsController getPowerUpsController() {
+        return powerUpsController;
+    }
+
+    public ParticleController getParticleController() {
+        return particleController;
+    }
+
+    public AsteroidController getAsteroidController() {
+        return asteroidController;
+    }
+
+    public BulletController getBulletController() {
+        return bulletController;
+    }
+
+    public Background getBackground() {
+        return background;
+    }
+
+    public Hero getHero() {
+        return hero;
     }
 }

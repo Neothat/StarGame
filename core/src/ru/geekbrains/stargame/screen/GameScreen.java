@@ -14,10 +14,6 @@ public class GameScreen extends AbstractScreen {
         super(batch);
     }
 
-    public GameController getGc() {
-        return gc;
-    }
-
     @Override
     public void show() {
         Assets.getInstance().loadAssets(ScreenManager.ScreenType.GAME);
@@ -29,5 +25,9 @@ public class GameScreen extends AbstractScreen {
     public void render(float delta) {
         gc.update(delta);
         worldRenderer.render();
+    }
+
+    public GameController getGc() {
+        return gc;
     }
 }

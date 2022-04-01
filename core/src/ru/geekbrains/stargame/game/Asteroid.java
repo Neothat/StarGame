@@ -25,29 +25,9 @@ public class Asteroid implements Poolable {
     private final float BASE_SIZE = 256.0f;
     private final float BASE_RADIUS = BASE_SIZE / 2;
 
-    public float getScale() {
-        return scale;
-    }
-
-    public int getHpMax() {
-        return hpMax;
-    }
-
-    public Circle getHitArea() {
-        return hitArea;
-    }
-
     @Override
     public boolean isActive() {
         return active;
-    }
-
-    public Vector2 getPosition() {
-        return position;
-    }
-
-    public Vector2 getVelocity() {
-        return velocity;
     }
 
     public Asteroid(GameController gc) {
@@ -116,5 +96,25 @@ public class Asteroid implements Poolable {
         } else {
             return false;
         }
+    }
+
+    public float getScale() {
+        return scale;
+    }
+
+    public int getHpMax() {
+        return hpMax;
+    }
+
+    public Circle getHitArea() {
+        return hitArea;
+    }
+
+    public Vector2 getPosition() {
+        return position;
+    }
+
+    public Vector2 getVelocity() {
+        return velocity;
     }
 }

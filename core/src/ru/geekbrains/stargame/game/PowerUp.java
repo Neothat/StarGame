@@ -24,33 +24,9 @@ public class PowerUp implements Poolable {
     private Type type;
     private int power;
 
-    public Type getType() {
-        return type;
-    }
-
-    public float getTime() {
-        return time;
-    }
-
-    public int getPower() {
-        return power;
-    }
-
-    public Vector2 getPosition() {
-        return position;
-    }
-
     @Override
     public boolean isActive() {
         return active;
-    }
-
-    public Vector2 getVelocity() {
-        return velocity;
-    }
-
-    public void deactivate() {
-        active = false;
     }
 
     public PowerUp(GameController gc) {
@@ -76,5 +52,29 @@ public class PowerUp implements Poolable {
         if (time >= 7.0f) {
             deactivate();
         }
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public float getTime() {
+        return time;
+    }
+
+    public int getPower() {
+        return power;
+    }
+
+    public Vector2 getPosition() {
+        return position;
+    }
+
+    public Vector2 getVelocity() {
+        return velocity;
+    }
+
+    public void deactivate() {
+        active = false;
     }
 }

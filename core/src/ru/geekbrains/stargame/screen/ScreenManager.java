@@ -29,19 +29,7 @@ public class ScreenManager {
 
     private static ScreenManager ourInstance = new ScreenManager();
 
-    public static ScreenManager getInstance() {
-        return ourInstance;
-    }
-
-    public Viewport getViewport() {
-        return viewport;
-    }
-
     private ScreenManager() {
-    }
-
-    public GameScreen getGameScreen() {
-        return gameScreen;
     }
 
     public void init(StarGame game, SpriteBatch batch) {
@@ -86,5 +74,13 @@ public class ScreenManager {
 
     public void goToTarget() {
         game.setScreen(targetScreen);
+    }
+
+    public static ScreenManager getInstance() {
+        return ourInstance;
+    }
+
+    public Viewport getViewport() {
+        return viewport;
     }
 }

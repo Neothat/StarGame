@@ -14,24 +14,8 @@ public class Weapon {
     private int maxBullets;
     private int curBullets;
     private Sound shootSound;
-
     private Vector3[] slots;
 
-    public float getFirePeriod() {
-        return firePeriod;
-    }
-
-    public int getDamage() {
-        return damage;
-    }
-
-    public int getMaxBullets() {
-        return maxBullets;
-    }
-
-    public int getCurBullets() {
-        return curBullets;
-    }
 
     public Weapon(GameController gc, Ship ship, float firePeriod, int damage,
 				  float bulletSpeed, int maxBullets, Vector3[] slots) {
@@ -70,5 +54,17 @@ public class Weapon {
             curBullets = maxBullets;
         }
         return curBullets - oldCurBullets;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public int getMaxBullets() {
+        return maxBullets;
+    }
+
+    public int getCurBullets() {
+        return curBullets;
     }
 }

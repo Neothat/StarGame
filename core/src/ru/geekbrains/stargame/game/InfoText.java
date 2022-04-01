@@ -18,22 +18,6 @@ public class InfoText implements Poolable {
         return active;
     }
 
-    public StringBuilder getText() {
-        return text;
-    }
-
-    public Vector2 getPosition() {
-        return position;
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
-    public float getLifetime() {
-        return time / maxTime;
-    }
-
     public InfoText() {
         this.text = new StringBuilder();
         this.active = false;
@@ -68,5 +52,17 @@ public class InfoText implements Poolable {
         if (time >= maxTime) {
             active = false;
         }
+    }
+
+    public StringBuilder getText() {
+        return text;
+    }
+
+    public Vector2 getPosition() {
+        return position;
+    }
+
+    public Color getColor() {
+        return color;
     }
 }

@@ -12,6 +12,7 @@ import static ru.geekbrains.stargame.screen.ScreenManager.SCREEN_WIDTH;
 
 
 public class Background {
+
     private class Star {
         private Vector2 position;
         private Vector2 velocity;
